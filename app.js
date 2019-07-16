@@ -30,53 +30,47 @@
     // distinct view patterns //like questions, scoreboard and end quiz score
 
     const siteURL='http://localhost/continentquiz/';
-
+    const questionsPerQuiz=5, bestScoresQuant=3, nrChoices=3;
     const viewIds=['home','main','results'];
     const buttonIds=['playBtn','ans0Btn','ans1Btn','ans2Btn','nextBtn','homeBtn','playAgainBtn'];
     let onClickListeners={};
     let viewDivs={};
     let btns={};
-    let ansbtns={};
+    let ansbtns=[];
     let img;
     let curQuestionData;
     let pts=0, ptssQuant=750;
     let answers;
     let qGen;
     let curQuestionNmbr=1;
-    const questionsPerQuiz=5, bestScoresQuant=3;
     let localStorage=window.localStorage;
     let scoreboardTbl;
 
     window.onload= function(){
-        getViewDivs();
+        getViewDivs();//stavlja divove (koji su kao template) u viewDivs...
         img=document.getElementById('questionImg');
         scoreboardTbl=document.getElementById('scoreboardTbl');
-        injectScoreboardTbl(localStorage,scoreboardTbl);
-        switchToView(viewDivs[viewIds[0]]);
+        injectScoreboardTbl(localStorage,scoreboardTbl);//postavlja scoreboard niz u tabelu..
+        switchToView(viewDivs[viewIds[0]]);//samo jedan div se postavlja kao vidljiv, u ovom slucaju prvi, tj home div
         addClickListeners(buttonIds,btns);
+        getAnswerButtons(btns);//stavlja answer buttons iz btns u niz ansbtns
     }
 
     function getViewDivs(){
-        for(i of viewIds){
-            viewDivs[i]=document.getElementById(i);
-        }
+        for(i of viewIds) viewDivs[i]=document.getElementById(i);
     }
 
     function injectScoreboardTbl(localStorage,scoreboardTbl){
         let bs=getBestScores(localStorage);
         if (Array.isArray(bs) && bs.length){
             let scoreboard="";
-            for(i of bs){
-                scoreboard+="<tr>"+i+"</tr>";
-            }
+            for(i of bs) scoreboard+="<tr>"+i+"</tr>";
             scoreboardTbl.innerHTML=scoreboard;
         }
     }
 
-    function switchToView(newView, viewData=null){
-        for(i of Object.values(viewDivs)){
-            setVisibility(i,false);
-        }
+    function switchToView(newView, viewData=null){//mislio sam da preko viewData saljem podatke za view... ali sam odustao od toga obrisacu to...
+        for(i of Object.values(viewDivs)) setVisibility(i,false);
         setVisibility(newView,true);
     }
 
@@ -87,45 +81,31 @@
         }
     }
 
-    function disableAllAnswers(){
-        btns.ans0Btn.disabled=false;
-        btns.ans1Btn.disabled=false;
-        btns.ans2Btn.disabled=false;
+    function AllAnswersClickable(yes=true){
+        for(i of ansbtns) i.disabled=!yes;
     }
 
     function functionDispatcher(functions,key){
+        console.log(key.slice(3,4));
+        if (key.slice(0,3)=='ans'){//regex umesto ovoga
+            return functions['ansBtn'];
+        }
+        else if(key.slice(0,4)=='play'){
+            return functions['playBtn']
+        }
         return functions[key];
     }
 
-    onClickListeners.playBtn=function(){
-        startNewQuiz();
-    }
-    onClickListeners.ans0Btn=function(){
-        btns.ans0Btn.disabled=true;
-        btns.ans1Btn.disabled=true;
-        btns.ans2Btn.disabled=true;
-        let correct=btns.ans0Btn.innerText==curQuestionData.qa.continent?true:false;
+    onClickListeners.ansBtn = function(evt){
+        AllAnswersClickable(false);
+        let btn=evt.currentTarget;
+        let correct=btn.innerText==curQuestionData.qa.continent?true:false;
         pts+=correct?ptssQuant:0;
         window.alert('You are '+(correct?'right! :)':'wrong. :(')+'\npoints:'+pts);
         setVisibility(nextBtn);
     }
-    onClickListeners.ans1Btn=function(){
-        btns.ans0Btn.disabled=true;
-        btns.ans1Btn.disabled=true;
-        btns.ans2Btn.disabled=true;
-        let correct=btns.ans1Btn.innerText==curQuestionData.qa.continent?true:false;
-        pts+=correct?ptssQuant:0;
-        window.alert('You are '+(correct?'right! :)':'wrong. :(')+"\n"+'points:'+pts);
-        setVisibility(nextBtn);
-    }
-    onClickListeners.ans2Btn=function(){
-        btns.ans0Btn.disabled=true;
-        btns.ans1Btn.disabled=true;
-        btns.ans2Btn.disabled=true;
-        let correct=btns.ans2Btn.innerText==curQuestionData.qa.continent?true:false;
-        pts+=correct?ptssQuant:0;
-        window.alert('You are '+(correct?'right! :)':'wrong. :(')+"\n"+'points:'+pts);
-        setVisibility(nextBtn);
+    onClickListeners.playBtn=function(){
+        startNewQuiz();
     }
     onClickListeners.nextBtn=function(){
         if (curQuestionNmbr>=questionsPerQuiz) {
@@ -141,13 +121,9 @@
         curQuestionData=qGen.next().value;
         viewNextQuestion(curQuestionData);
     }
-    
     onClickListeners.homeBtn=function(){
         injectScoreboardTbl(localStorage,scoreboardTbl);
         switchToView(viewDivs['home']);
-    }
-    onClickListeners.playAgainBtn=function(){
-        startNewQuiz();
     }
 
     //error handling
@@ -201,9 +177,7 @@
             bs.splice(bestScoresQuant);
             setBestScores(localStorage,bs);
         }
-        else{
-            setBestScores(localStorage,[score]);
-        }
+        else setBestScores(localStorage,[score]);
     }
 
     function setVisibility(element,visible=true){
@@ -256,20 +230,20 @@
         }
     }
 
+    function getAnswerButtons(btns){
+        for (let i=0;i<nrChoices;i++) ansbtns[i]=btns['ans'+i+'Btn'];
+    }
+
     function viewNextQuestion(qd){
         img.src=qd.qa.image;
-        for (let i=0;i<qd.choices.length;i++){  
-            btns['ans'+i+'Btn'].innerText=qd.choices[i];
-        }
-        btns.ans0Btn.disabled=false;
-        btns.ans1Btn.disabled=false;
-        btns.ans2Btn.disabled=false;
+        document.getElementById('questionNmbr').innerText=curQuestionNmbr;
+        for(i=0;i<ansbtns.length;i++) ansbtns[i].innerHTML=qd.choices[i];
+        AllAnswersClickable(true);
         setVisibility(btns.nextBtn,false);
-        switchToView(viewDivs['main']);
+        switchToView(viewDivs.main);
     }
 
     function onAnswersRecieved(data){
-        console.log('answers',data.length);
         answers=data;
         const distinct=getDistinctValues(answers);
         qGen=getQuestionData(answers,distinct,3);
