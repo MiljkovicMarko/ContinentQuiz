@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="app.js"></script>
+    </head>
+    <body>
+        <div id="home" style="display: none">
+            <p>Scoreboard</p>
+            <table>
+                <tbody id="scoreboardTbl"></tbody>
+            </table>
+            <button id="playBtn">play</button>
+        </div>
+        <div id="main" style="display: none">
+            <p>Question</p>
+            <img id='questionImg' src="" alt="" style="width: 400px; height: 300px; border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;">
+            <br>
+            <button id="ans0Btn"></button>
+            <br>
+            <button id="ans1Btn"></button>
+            <br>
+            <button id="ans2Btn"></button>
+            <br>
+            <button id="nextBtn" style="display: none">Next Question</button>
+        </div>
+        <div id="results" style="display: none">
+            <p>Your score is:</p>
+            <h1 id='scoreP'></h1>
+            <button id="homeBtn">View the Scoreboard</button>
+            <button id="playAgainBtn">Play Again</button>
+        </div>
+    </body>
+</html>
