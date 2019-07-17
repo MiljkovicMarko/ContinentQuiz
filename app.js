@@ -1,34 +1,3 @@
-//home view:
-    // display top 3 user scores and play button:
-        // from local storage load json with top three users and scores
-        // view the data
-        // listen for play button press
-        //on press transfer to mainscreen
-
-//main screen:
-    //display question nmbr, picture and answers:
-        //done:    //load question json
-                //take one question/answer pair //randomly //done
-                //add two more different answers  //randomly //done
-        //local store the current question!!! current state! cause reload
-        //view the data
-        //listen for answer button press
-        //check if answer is correct
-        //add points
-        //give feedback
-        //loop this for 5 questions //dont repeat the same
-
-//results screen
-    //display points, play again, scoreboard button
-    //write points to local storage
-
-//distinct modules:
-    // from local storage load json with top three users and scores
-    // view the data //send data to view
-    // listen for clicks
-    // transfer to other views/scripts
-    // distinct view patterns //like questions, scoreboard and end quiz score
-
     const siteURL='http://localhost/continentquiz/';
     const questionsPerQuiz=5, bestScoresQuant=3, nrChoices=3;
     const viewIds=['home','main','results'];
@@ -39,12 +8,13 @@
     let ansbtns=[];
     let img;
     let curQuestionData;
-    let pts=0, ptssQuant=750;
+    let pts=0, ptsQuant=750;
     let answers;
     let qGen;
     let curQuestionNmbr=1;
     let localStorage=window.localStorage;
     let scoreboardTbl;
+    let qa;//images and answer cache array// load json only once!
 
     window.onload= function(){
         getViewDivs();//stavlja divove (koji su kao template) u viewDivs...
@@ -81,12 +51,35 @@
         }
     }
 
-    function AllAnswersClickable(yes=true){
+    function allAnswersClickable(yes=true){
         for(i of ansbtns) i.disabled=!yes;
     }
 
+    function answersGetFeedback(pressedAns,correctAns,allAns){
+        pressedAns.classList.remove('text-only');
+        if (pressedAns.childNodes[0].innerText==correctAns){
+            pressedAns.classList.add('pressed','correct');
+            pts+=ptsQuant;
+            return;
+        }
+        pressedAns.classList.add('pressed', 'incorrect');
+        for(i of allAns){
+            if (i.childNodes[0].innerText==correctAns){
+                i.classList.remove('text-only');
+                i.classList.add('correct');
+            }
+        }
+    }
+
+    function allAnswersTextOnly(allAns){
+        for(i of allAns){
+            i.classList.remove('pressed','incorrect','correct');
+            i.classList.add('text-only');
+        }
+    }
+
     function functionDispatcher(functions,key){
-        console.log(key.slice(3,4));
+        // console.log(key.slice(3,4));
         if (key.slice(0,3)=='ans'){//regex umesto ovoga
             return functions['ansBtn'];
         }
@@ -97,11 +90,8 @@
     }
 
     onClickListeners.ansBtn = function(evt){
-        AllAnswersClickable(false);
-        let btn=evt.currentTarget;
-        let correct=btn.innerText==curQuestionData.qa.continent?true:false;
-        pts+=correct?ptssQuant:0;
-        window.alert('You are '+(correct?'right! :)':'wrong. :(')+'\npoints:'+pts);
+        allAnswersClickable(false);
+        answersGetFeedback(evt.currentTarget,curQuestionData.qa.continent, ansbtns, pts, ptsQuant);
         setVisibility(nextBtn);
     }
     onClickListeners.playBtn=function(){
@@ -123,11 +113,11 @@
     }
     onClickListeners.homeBtn=function(){
         injectScoreboardTbl(localStorage,scoreboardTbl);
-        switchToView(viewDivs['home']);
+        switchToView(viewDivs.home);
     }
 
     //error handling
-    function fetchJSONFile(path, callback) {
+    function fetchJSONFile(path, callback) { //uradi ovo tako da vraca podatke koje mogu da stavim u const
         let httpRequest = new XMLHttpRequest();
         httpRequest.onreadystatechange = function() {
             if (httpRequest.readyState === 4) {
@@ -149,6 +139,8 @@
     }
 
     function startNewQuiz(){
+        // setVisibility(img,false);
+        img.classList.remove('load');
         curQuestionNmbr=1;
         pts=0;
         btns.nextBtn.innerText='Next Question';
@@ -173,15 +165,18 @@
         if (Array.isArray(bs) && bs.length){
             scorePos=getScorePos(bs,score);
             if (scorePos>bestScoresQuant-1) return;
-            bs.splice(scorePos,0,score);
-            bs.splice(bestScoresQuant);
+            bs.splice(scorePos,0,score).splice(bestScoresQuant);
             setBestScores(localStorage,bs);
         }
         else setBestScores(localStorage,[score]);
     }
 
     function setVisibility(element,visible=true){
-        element.style.display=visible?'block':'none';
+        if (visible){
+            element.classList.remove('invisible');
+            return;
+        }
+        element.classList.add('invisible');
     }
 
     function getRandomInt(min, max) {
@@ -235,12 +230,21 @@
     }
 
     function viewNextQuestion(qd){
+        img.classList.remove('load');
         img.src=qd.qa.image;
         document.getElementById('questionNmbr').innerText=curQuestionNmbr;
-        for(i=0;i<ansbtns.length;i++) ansbtns[i].innerHTML=qd.choices[i];
-        AllAnswersClickable(true);
+        for(i=0;i<ansbtns.length;i++) ansbtns[i].childNodes[0].innerText=qd.choices[i];
+        console.log('allAnsTextOnly');
+        allAnswersTextOnly(ansbtns);
+        allAnswersClickable(true);
         setVisibility(btns.nextBtn,false);
         switchToView(viewDivs.main);
+    }
+
+    function onImgLoaded(){
+        // setVisibility(img,true);
+        img.classList.add('load');
+        // console.log("IMG LOADED");
     }
 
     function onAnswersRecieved(data){

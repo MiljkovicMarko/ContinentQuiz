@@ -2,35 +2,41 @@
 <html>
     <head>
         <script src="app.js"></script>
+        <link rel="stylesheet" href="./styles/css/normalize.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="./styles/css/styles.css">
     </head>
     <body>
-        <div id="home" style="display: none">
+        <div id="home">
+            <i class="material-icons close">close</i>
+            <i class="material-icons check">check</i>
+            <i class="material-icons category">category</i>
+            <i class="material-icons numbered-list">format_list_numbered</i>
             <p>Scoreboard</p>
             <table>
                 <tbody id="scoreboardTbl"></tbody>
             </table>
-            <button id="playBtn">play</button>
+            <button id="playBtn"><span class="material-icons category">category</span>Play</button>
         </div>
-        <div id="main" style="display: none">
+        <div id="main">
             <p>Question <span id='questionNmbr'></span>:</p>
             <p>What continent is on the picture?</p>
-            <img id='questionImg' src="" alt="" style="width: 400px; height: 300px; border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 5px;">
+            <img id='questionImg' src="" alt="" onload="onImgLoaded()">
             <br>
-            <button id="ans0Btn"></button>
+            <button id="ans0Btn" class="btn ans text-only"><span id=ans0BtnText></span><span class="material-icons check">check</span><span class="material-icons close">close</span></button>
             <br>
-            <button id="ans1Btn"></button>
+            <button id="ans1Btn" class="btn ans text-only"><span id=ans0BtnText></span><span class="material-icons check">check</span><span class="material-icons close">close</span></button>
             <br>
-            <button id="ans2Btn"></button>
+            <button id="ans2Btn" class="bnt ans text-only"><span id=ans0BtnText></span><span class="material-icons check">check</span><span class="material-icons close">close</span></button>
             <br>
-            <button id="nextBtn" style="display: none">Next Question</button>
+            <button id="nextBtn">Next Question</button>
         </div>
-        <div id="results" style="display: none">
+        <div id="results">
+            <i class="material-icons category">category</i>
             <p>Your score is:</p>
-            <h1 id='scoreP'></h1>
-            <button id="homeBtn">View the Scoreboard</button>
-            <button id="playAgainBtn">Play Again</button>
+            <p id='scoreP' class="score"></p>
+            <button id="homeBtn"><i class="material-icons numbered-list">format_list_numbered</i>View the Scoreboard</button>
+            <button id="playAgainBtn"><i class="material-icons category">category</i> Play Again</button>
         </div>
     </body>
 </html>
