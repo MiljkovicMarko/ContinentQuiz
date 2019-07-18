@@ -1,11 +1,21 @@
 body {
+  display: flex;
+  position: relative;
   font: 100% Helvetica, sans-serif;
-  color: #333; }
+  color: #333;
+  margin: auto;
+  padding: auto;
+  width: max-content;
+  flex-direction: column;
+  align-content: center; }
 
-span {
-  margin: 0px;
-  padding: 0px;
-  position: static; }
+button span, a span {
+  display: flex;
+  flex-direction: row;
+  justify-self: center;
+  align-self: center;
+  margin-right: auto;
+  margin-left: auto; }
 
 .score {
   font-size: 24pt; }
@@ -13,10 +23,10 @@ span {
 .correct .material-icons.close {
   display: none; }
 .correct .material-icons.check {
-  display: inline-block; }
+  display: flex; }
 
 .incorrect .material-icons.close {
-  display: inline-block; }
+  display: flex; }
 .incorrect .material-icons.check {
   display: none; }
 
@@ -31,106 +41,102 @@ img {
   height: 300px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  padding: 5px; }
+  padding: 5px;
+  position: relative; }
 
-@-webkit-keyframes fadein {
+@-webkit-keyframes fadeIn {
   from {
     opacity: 0; }
   to {
     opacity: 1; } }
-@-moz-keyframes fadein {
+@-moz-keyframes fadeIn {
   from {
     opacity: 0; }
   to {
     opacity: 1; } }
-@-ms-keyframes fadein {
+@-ms-keyframes fadeIn {
   from {
     opacity: 0; }
   to {
     opacity: 1; } }
-@-o-keyframes fadein {
+@-o-keyframes fadeIn {
   from {
     opacity: 0; }
   to {
     opacity: 1; } }
-@keyframes fadein {
+@keyframes fadeIn {
   from {
     opacity: 0; }
   to {
     opacity: 1; } }
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    visibility: visible; }
+  99% {
+    opacity: 0.01;
+    visibility: visible; }
+  100% {
+    opacity: 0;
+    display: none; } }
 img.load {
-  -webkit-animation: fadein 2s;
-  /* Safari, Chrome and Opera > 12.1 */
-  -moz-animation: fadein 2s;
-  /* Firefox < 16 */
-  -ms-animation: fadein 2s;
-  /* Internet Explorer */
-  -o-animation: fadein 2s;
-  /* Opera < 12.1 */
-  animation: fadein 2s;
+  position: relative;
   opacity: 1; }
 
 div {
+  animation: fadeIn 2s;
   margin: auto;
   padding: auto;
   width: max-content;
-  display: relative;
-  text-align: center; }
+  display: flex;
+  align-self: center;
+  justify-self: center;
+  flex-direction: column;
+  position: relative;
+  visibility: visible;
+  opacity: 1; }
 
 .check {
   color: green;
-  display: inline-block;
-  text-align: right;
-  float: right;
-  font-size: 24px;
-  margin: 0px;
-  padding: 0px; }
+  display: flex;
+  position: absolute;
+  right: 1%;
+  font-size: 24px; }
 
 .close {
   color: red;
-  display: inline-block;
-  text-align: right;
-  float: right;
-  font-size: 24px;
-  margin: 0px;
-  padding: 0px; }
+  display: flex;
+  position: absolute;
+  right: 1%;
+  font-size: 24px; }
 
 .category {
   color: blue;
-  display: inline-block;
-  text-align: right;
-  float: right;
-  font-size: 24px;
-  margin: 0px;
-  padding: 0px; }
+  display: flex;
+  position: absolute;
+  right: 1%;
+  font-size: 24px; }
 
 .numbered-list {
   color: black;
-  display: inline-block;
-  text-align: right;
-  float: right;
-  font-size: 24px;
-  margin: 0px;
-  padding: 0px; }
+  display: flex;
+  position: absolute;
+  right: 1%;
+  font-size: 24px; }
 
 button {
+  opacity: 1;
   background-color: white;
   color: black;
   padding: 0px;
   text-decoration: none;
-  display: inline-block;
-  font-size: 24px;
-  margin: 5px;
-  width: 22ch;
-  border-color: #2020aa;
-  border-radius: 12px; }
-
-button:target, button:active, button:hover {
-  background-color: #2020aa;
-  color: white;
-  padding: 0px;
-  text-decoration: none;
-  display: inline-block;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  justify-content: center;
+  justify-self: center;
+  align-content: center;
+  align-self: center;
   font-size: 24px;
   margin: 5px;
   width: 22ch;
@@ -142,11 +148,35 @@ button:target, button:active, button:hover {
   color: black;
   padding: 0px;
   text-decoration: none;
-  display: inline-block;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  justify-content: center;
+  justify-self: center;
+  align-content: center;
+  align-self: center;
   font-size: 24px;
   margin: 5px;
   width: 22ch;
   border-color: #ffaa20;
+  border-radius: 12px; }
+
+button:target, button:active, button:hover, button:active:disabled {
+  background-color: #2020aa;
+  color: white;
+  padding: 0px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  justify-content: center;
+  justify-self: center;
+  align-content: center;
+  align-self: center;
+  font-size: 24px;
+  margin: 5px;
+  width: 22ch;
+  border-color: #2020aa;
   border-radius: 12px; }
 
 .ans:target, .ans:active, .ans:hover {
@@ -154,7 +184,13 @@ button:target, button:active, button:hover {
   color: white;
   padding: 0px;
   text-decoration: none;
-  display: inline-block;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  justify-content: center;
+  justify-self: center;
+  align-content: center;
+  align-self: center;
   font-size: 24px;
   margin: 5px;
   width: 22ch;
@@ -162,6 +198,12 @@ button:target, button:active, button:hover {
   border-radius: 12px; }
 
 .invisible, button.invisible {
+  animation: fadeOut 2s;
+  opacity: 0;
+  visibility: hidden;
+  position: absolute; }
+
+.dsp-none {
   display: none; }
 
 /*# sourceMappingURL=styles.css.map */

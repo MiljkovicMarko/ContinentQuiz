@@ -7,31 +7,29 @@
         <link rel="stylesheet" href="./styles/css/styles.css">
     </head>
     <body>
-        <div id="home">
-            <i class="material-icons close">close</i>
-            <i class="material-icons check">check</i>
-            <i class="material-icons category">category</i>
-            <i class="material-icons numbered-list">format_list_numbered</i>
+        <div id="home" class="">
             <p>Scoreboard</p>
             <table>
                 <tbody id="scoreboardTbl"></tbody>
             </table>
             <button id="playBtn"><span class="material-icons category">category</span>Play</button>
         </div>
-        <div id="main">
+        <div id="main" class="dsp-none">
             <p>Question <span id='questionNmbr'></span>:</p>
             <p>What continent is on the picture?</p>
-            <img id='questionImg' src="" alt="" onload="onImgLoaded()">
+            <img id='questionImg' src="" alt="" onload="onImgLoaded();">
             <br>
             <button id="ans0Btn" class="btn ans text-only"><span id=ans0BtnText></span><span class="material-icons check">check</span><span class="material-icons close">close</span></button>
             <br>
             <button id="ans1Btn" class="btn ans text-only"><span id=ans0BtnText></span><span class="material-icons check">check</span><span class="material-icons close">close</span></button>
             <br>
-            <button id="ans2Btn" class="bnt ans text-only"><span id=ans0BtnText></span><span class="material-icons check">check</span><span class="material-icons close">close</span></button>
+            <button id="ans2Btn" class="btt ans text-only"><span id=ans0BtnText></span><span class="material-icons check">check</span><span class="material-icons close">close</span></button>
             <br>
-            <button id="nextBtn">Next Question</button>
+            <div>
+                <button id="nextBtn" class="btn dsp-none" onload="onBtnLoaded();">Next Question</button>
+            </div>
         </div>
-        <div id="results">
+        <div id="results" class="dsp-none">
             <i class="material-icons category">category</i>
             <p>Your score is:</p>
             <p id='scoreP' class="score"></p>

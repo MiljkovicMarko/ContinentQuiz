@@ -1,7 +1,7 @@
     const siteURL='http://localhost/continentquiz/';
     const questionsPerQuiz=5, bestScoresQuant=3, nrChoices=3;
     const viewIds=['home','main','results'];
-    const buttonIds=['playBtn','ans0Btn','ans1Btn','ans2Btn','nextBtn','homeBtn','playAgainBtn'];
+    const buttonIds=['playBtn','ans0Btn','ans1Btn','ans2Btn','nextBtn', 'homeBtn','playAgainBtn'];
     let onClickListeners={};
     let viewDivs={};
     let btns={};
@@ -15,6 +15,7 @@
     let localStorage=window.localStorage;
     let scoreboardTbl;
     let qa;//images and answer cache array// load json only once!
+    // let curMain=1;
 
     window.onload= function(){
         getViewDivs();//stavlja divove (koji su kao template) u viewDivs...
@@ -109,6 +110,7 @@
             btns.nextBtn.innerText='Go to Results';
         }
         curQuestionData=qGen.next().value;
+        // setVisibility(viewDivs.[(!curMain+0)+'main'],false);
         viewNextQuestion(curQuestionData);
     }
     onClickListeners.homeBtn=function(){
@@ -145,6 +147,9 @@
         pts=0;
         btns.nextBtn.innerText='Next Question';
         fetchJSONFile(siteURL+'answers.json',onAnswersRecieved);
+        // console.log('START NEW QUIZ','main'+(!curMain));
+        // curMain=1;
+        // switchToView(viewDivs['main'+curMain]);
     }
 
     function getBestScores(localStorage){
@@ -173,10 +178,15 @@
 
     function setVisibility(element,visible=true){
         if (visible){
+            // element.removeEventListener('onanimationend',onAnimationEnd);
+            
+            element.classList.remove('dsp-none');
             element.classList.remove('invisible');
             return;
         }
         element.classList.add('invisible');
+        console.log('setVis,anim name', element.style.animationDuration);
+        // element.addEventListener('onanimationend',onAnimationEnd);//ne radi
     }
 
     function getRandomInt(min, max) {
@@ -234,10 +244,12 @@
         img.src=qd.qa.image;
         document.getElementById('questionNmbr').innerText=curQuestionNmbr;
         for(i=0;i<ansbtns.length;i++) ansbtns[i].childNodes[0].innerText=qd.choices[i];
-        console.log('allAnsTextOnly');
+        // console.log('allAnsTextOnly');
         allAnswersTextOnly(ansbtns);
         allAnswersClickable(true);
         setVisibility(btns.nextBtn,false);
+        // setVisibility(viewDivs.main,false);
+        // switchToView(viewDivs['main'+(curMain=!curMain+0)]);
         switchToView(viewDivs.main);
     }
 
@@ -245,6 +257,40 @@
         // setVisibility(img,true);
         img.classList.add('load');
         // console.log("IMG LOADED");
+    }
+
+    function onBtnLoaded(evt){
+        // setVisibility(img,true);
+        evt.currentTarget.classList.add('load');
+        // console.log("IMG LOADED");
+    }
+
+    function onAnimationEnd(el){
+        // el.classList.add("dsp-none");
+        console.log('animationEND',el);//,asd,qwe)
+    }
+
+    window.onanimationend = e => {
+        // stacksnippet's console also has CSS animations...
+        console.log({ // logging the full event will kill the page
+            target: e.target,
+            tagName: e.target.tagName,
+            type: e.type,
+            animationName: e.animationName
+            // animationDur: e.animationDuration
+            });
+        if(e.animationName === 'fadeOut'){
+            e.target.classList.add('dsp-none');
+        }
+        
+        // else if(e.animationName === 'fadeIn'){
+        //     console.log({ // logging the full event will kill the page
+        //     target: e.target,
+        //     type: e.type,
+        //     animationName: e.animationName
+        //     });
+        //     e.target.classList.add('dsp-none');
+        // }
     }
 
     function onAnswersRecieved(data){
