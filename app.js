@@ -2,6 +2,7 @@
     const questionsPerQuiz=5, bestScoresQuant=3, nrChoices=3;
     const viewIds=['home','main','results'];
     const buttonIds=['playBtn','ans0Btn','ans1Btn','ans2Btn','nextBtn', 'homeBtn','playAgainBtn'];
+    let distinct;
     let onClickListeners={};
     let viewDivs={};
     let btns={};
@@ -9,15 +10,18 @@
     let img;
     let curQuestionData;
     let pts=0, ptsQuant=750;
-    let answers;
+    let constanswers=null,answers=null;
     let qGen;
     let curQuestionNmbr=1;
     let localStorage=window.localStorage;
     let scoreboardTbl;
+    let nextImg;
+    let nextQuestionData;
     let qa;//images and answer cache array// load json only once!
-    // let curMain=1;
+    //odraditi neki feedback kad se slika jos nije ucitala, ili ne dopustiti sled pitanje dok se ne ucita...
 
     window.onload= function(){
+        fetchJSONFile(siteURL+'answers.json',onAnswersRecieved);
         getViewDivs();//stavlja divove (koji su kao template) u viewDivs...
         img=document.getElementById('questionImg');
         scoreboardTbl=document.getElementById('scoreboardTbl');
@@ -25,6 +29,8 @@
         switchToView(viewDivs[viewIds[0]]);//samo jedan div se postavlja kao vidljiv, u ovom slucaju prvi, tj home div
         addClickListeners(buttonIds,btns);
         getAnswerButtons(btns);//stavlja answer buttons iz btns u niz ansbtns
+        prepNewQuiz().Rsesult;
+        console.log('done');
     }
 
     function getViewDivs(){
@@ -106,6 +112,7 @@
         if (curQuestionNmbr>=questionsPerQuiz) {
             saveScore(localStorage,pts);
             document.getElementById('scoreP').innerText=pts;//prebaci u varijable
+            prepNewQuiz();//za slucaj da se posle igra
             switchToView(viewDivs.results);
             return;
         }
@@ -113,14 +120,13 @@
         if (curQuestionNmbr>=questionsPerQuiz) {
             btns.nextBtn.innerText='Go to Results';
         }
-        curQuestionData=qGen.next().value;
-        // setVisibility(viewDivs.[(!curMain+0)+'main'],false);
+        // curQuestionData=qGen.next().value;//
         let cln=viewDivs.main.cloneNode(true);
         cln.style.position='absolute';
         cln.id='cln';
         document.body.appendChild(cln);
         setVisibility(cln,false);
-        viewNextQuestion(curQuestionData);
+        viewNextQuestion(nextQuestionData,nextImg);
     }
     onClickListeners.homeBtn=function(){
         viewDivs.results.classList.remove('fade-in');
@@ -150,16 +156,40 @@
         httpRequest.send();
     }
 
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }      
+
+    async function prepNewQuiz(){
+        // console.log('anss',answers);
+        while(!(Array.isArray(constanswers) && constanswers.length)){//alternativa ovom najgorem cekanju
+            console.log('anss',answers);
+            await sleep(50);
+        }
+        answers=constanswers.slice();
+        console.log('anss',answers);
+        qGen=getQuestionData(answers,distinct,nrChoices);
+        img=document.getElementById('questionImg');
+        prepNewQuestion(qGen,img);
+    }
+
     function startNewQuiz(){
         // setVisibility(img,false);
+        // qGen=getQuestionData(answers,distinct,nrChoices);
+        // nextImg=null;
+        // nextQuestionData=null;
+        console.log('anss2',answers);
+        while(!(Array.isArray(answers) && answers.length)){//alternativa ovom najgorem cekanju
+            console.log('anss2',answers);
+            sleep(50).then(() => {
+                // Do something after the sleep!
+            });
+        }
         img.classList.remove('load');
         curQuestionNmbr=1;
         pts=0;
         btns.nextBtn.innerText='Next Question';
-        fetchJSONFile(siteURL+'answers.json',onAnswersRecieved);
-        // console.log('START NEW QUIZ','main'+(!curMain));
-        // curMain=1;
-        // switchToView(viewDivs['main'+curMain]);
+        viewNextQuestion(nextQuestionData,nextImg);
     }
 
     function getBestScores(localStorage){
@@ -250,19 +280,38 @@
         for (let i=0;i<nrChoices;i++) ansbtns[i]=btns['ans'+i+'Btn'];
     }
 
-    function viewNextQuestion(qd){
-        // viewDivs.main.classList.add('opacity0');
+    function prepNewQuestion(qGen,img){
+        nextQuestionData=qGen.next().value;
+        nextImg=preloadImage(img,nextQuestionData.qa.image);
+    }
+
+    function preloadImage(prevImg,url)
+    {
+        let img=prevImg.cloneNode(true);
+        img.src=url;
+        return img;
+        // img.addEventListener('onload',onPreloadImg);
+    }
+
+    function viewNextQuestion(qd,newImg){
+        console.log(answers);
+        curQuestionData=qd;
         img.classList.remove('load');
-        img.src=qd.qa.image;
+        if(newImg!==null){
+            img.parentNode.replaceChild(newImg, img);
+            img=newImg;
+        }
+        else{
+            img.src=qd.qa.image;
+        }
+        img.classList.remove('load');
         document.getElementById('questionNmbr').innerText=curQuestionNmbr;
         for(i=0;i<ansbtns.length;i++) ansbtns[i].childNodes[0].innerText=qd.choices[i];
-        // console.log('allAnsTextOnly');
         allAnswersTextOnly(ansbtns);
         allAnswersClickable(true);
         setVisibility(btns.nextBtn,false);
-        // setVisibility(viewDivs.main,false);
-        // switchToView(viewDivs['main'+(curMain=!curMain+0)]);
         switchToView(viewDivs.main);
+        prepNewQuestion(qGen,img);
     }
 
     function onImgLoaded(){
@@ -309,9 +358,8 @@
     }
 
     function onAnswersRecieved(data){
-        answers=data;
-        const distinct=getDistinctValues(answers);
-        qGen=getQuestionData(answers,distinct,3);
-        curQuestionData=qGen.next().value;
-        viewNextQuestion(curQuestionData);
+        constanswers=data;
+        distinct=getDistinctValues(constanswers);
+        // // curQuestionData=qGen.next().value;
+        // // viewNextQuestion(curQuestionData,nextImg);
     }//local store the current question?

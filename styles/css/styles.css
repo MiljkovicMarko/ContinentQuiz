@@ -50,15 +50,10 @@ img {
   to {
     opacity: 1; } }
 @keyframes fadeOut {
-  0% {
-    opacity: 1;
-    visibility: visible; }
-  99% {
-    opacity: 0.01;
-    visibility: visible; }
-  100% {
-    opacity: 0;
-    visibility: hidden; } }
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
 img.load {
   position: relative;
   opacity: 1; }
