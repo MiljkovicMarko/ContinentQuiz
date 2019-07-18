@@ -91,14 +91,18 @@
     }
 
     onClickListeners.ansBtn = function(evt){
+        viewDivs.main.classList.remove('fade-in');
         allAnswersClickable(false);
         answersGetFeedback(evt.currentTarget,curQuestionData.qa.continent, ansbtns, pts, ptsQuant);
         setVisibility(nextBtn);
     }
     onClickListeners.playBtn=function(){
+        viewDivs.home.classList.remove('fade-in');
+        viewDivs.results.classList.remove('fade-in');
         startNewQuiz();
     }
     onClickListeners.nextBtn=function(){
+        viewDivs.main.classList.remove('fade-in');
         if (curQuestionNmbr>=questionsPerQuiz) {
             saveScore(localStorage,pts);
             document.getElementById('scoreP').innerText=pts;//prebaci u varijable
@@ -111,9 +115,15 @@
         }
         curQuestionData=qGen.next().value;
         // setVisibility(viewDivs.[(!curMain+0)+'main'],false);
+        let cln=viewDivs.main.cloneNode(true);
+        cln.style.position='absolute';
+        cln.id='cln';
+        document.body.appendChild(cln);
+        setVisibility(cln,false);
         viewNextQuestion(curQuestionData);
     }
     onClickListeners.homeBtn=function(){
+        viewDivs.results.classList.remove('fade-in');
         injectScoreboardTbl(localStorage,scoreboardTbl);
         switchToView(viewDivs.home);
     }
@@ -179,13 +189,14 @@
     function setVisibility(element,visible=true){
         if (visible){
             // element.removeEventListener('onanimationend',onAnimationEnd);
-            
             element.classList.remove('dsp-none');
-            element.classList.remove('invisible');
+            element.classList.remove('fade-out');
+            element.classList.add('fade-in');
             return;
         }
-        element.classList.add('invisible');
-        console.log('setVis,anim name', element.style.animationDuration);
+        // element.classList.remove('fade-in');
+        element.classList.add('fade-out');
+        // console.log('setVis,anim name', element.style.animationDuration);
         // element.addEventListener('onanimationend',onAnimationEnd);//ne radi
     }
 
@@ -240,6 +251,7 @@
     }
 
     function viewNextQuestion(qd){
+        // viewDivs.main.classList.add('opacity0');
         img.classList.remove('load');
         img.src=qd.qa.image;
         document.getElementById('questionNmbr').innerText=curQuestionNmbr;
@@ -265,11 +277,6 @@
         // console.log("IMG LOADED");
     }
 
-    function onAnimationEnd(el){
-        // el.classList.add("dsp-none");
-        console.log('animationEND',el);//,asd,qwe)
-    }
-
     window.onanimationend = e => {
         // stacksnippet's console also has CSS animations...
         console.log({ // logging the full event will kill the page
@@ -280,7 +287,15 @@
             // animationDur: e.animationDuration
             });
         if(e.animationName === 'fadeOut'){
+            if(e.target.id=='cln'){
+                e.target.parentNode.removeChild(e.target);
+                return;
+            }
             e.target.classList.add('dsp-none');
+            e.target.classList.remove('fade-out');
+        }
+        if(e.animationName === 'fadeIn'){
+            e.target.classList.remove('fade-in');
         }
         
         // else if(e.animationName === 'fadeIn'){

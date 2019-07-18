@@ -44,26 +44,6 @@ img {
   padding: 5px;
   position: relative; }
 
-@-webkit-keyframes fadeIn {
-  from {
-    opacity: 0; }
-  to {
-    opacity: 1; } }
-@-moz-keyframes fadeIn {
-  from {
-    opacity: 0; }
-  to {
-    opacity: 1; } }
-@-ms-keyframes fadeIn {
-  from {
-    opacity: 0; }
-  to {
-    opacity: 1; } }
-@-o-keyframes fadeIn {
-  from {
-    opacity: 0; }
-  to {
-    opacity: 1; } }
 @keyframes fadeIn {
   from {
     opacity: 0; }
@@ -78,13 +58,12 @@ img {
     visibility: visible; }
   100% {
     opacity: 0;
-    display: none; } }
+    visibility: hidden; } }
 img.load {
   position: relative;
   opacity: 1; }
 
 div {
-  animation: fadeIn 2s;
   margin: auto;
   padding: auto;
   width: max-content;
@@ -93,8 +72,7 @@ div {
   justify-self: center;
   flex-direction: column;
   position: relative;
-  visibility: visible;
-  opacity: 1; }
+  visibility: visible; }
 
 .check {
   color: green;
@@ -125,7 +103,6 @@ div {
   font-size: 24px; }
 
 button {
-  opacity: 1;
   background-color: white;
   color: black;
   padding: 0px;
@@ -197,11 +174,12 @@ button:target, button:active, button:hover, button:active:disabled {
   border-color: #ffaa20;
   border-radius: 12px; }
 
-.invisible, button.invisible {
-  animation: fadeOut 2s;
-  opacity: 0;
-  visibility: hidden;
+.fade-out, button.fade-out {
+  animation: fadeOut 1s;
   position: absolute; }
+
+.fade-in {
+  animation: fadeIn 1s; }
 
 .dsp-none {
   display: none; }
