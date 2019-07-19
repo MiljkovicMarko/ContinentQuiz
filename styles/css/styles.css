@@ -119,7 +119,8 @@ button {
   margin: 5px;
   width: 22ch;
   border-color: #2020aa;
-  border-radius: 12px; }
+  border-radius: 12px;
+  transition: all 500ms; }
 
 .disabled {
   pointer-events: none; }
@@ -141,7 +142,8 @@ button {
   margin: 5px;
   width: 22ch;
   border-color: #ffaa20;
-  border-radius: 12px; }
+  border-radius: 12px;
+  transition: all 500ms; }
 
 button:target, button:active, button:hover, button:active:disabled {
   cursor: pointer;
@@ -160,9 +162,10 @@ button:target, button:active, button:hover, button:active:disabled {
   margin: 5px;
   width: 22ch;
   border-color: #2020aa;
-  border-radius: 12px; }
+  border-radius: 12px;
+  transition: all 500ms; }
 
-.ans:hover {
+.ans:hover, .pressed {
   cursor: pointer;
   background-color: #ffaa20;
   color: white;
@@ -179,7 +182,8 @@ button:target, button:active, button:hover, button:active:disabled {
   margin: 5px;
   width: 22ch;
   border-color: #ffaa20;
-  border-radius: 12px; }
+  border-radius: 12px;
+  transition: all 500ms; }
 
 .fade-out, button.fade-out {
   pointer-events: none;
@@ -195,5 +199,8 @@ button:target, button:active, button:hover, button:active:disabled {
 .dsp-none {
   pointer-events: none;
   display: none; }
+
+:focus {
+  outline: none; }
 
 /*# sourceMappingURL=styles.css.map */

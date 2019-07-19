@@ -53,6 +53,7 @@ $dfltBtnWidth: 22ch;
   border-color: $brdrClr;
   border-radius: 12px;
   // margin-left: calc(50%-15ch);
+  transition: all 500ms;
 }
 
 body {
@@ -75,35 +76,6 @@ button span, a span{
   margin-right: auto;
   margin-left: auto;
 }
-
-// a{
-//   cursor: pointer;
-//   background-color: $bckClr;
-//   color: $txtClr;
-//   padding: 0px;
-//   // text-align: center;
-//   text-decoration: none;
-//   display: flex;
-//   flex-direction: row;
-//   position: relative;
-//   justify-content: center;
-//   // justify-items: center;
-//   justify-self: center;
-//   align-content: center;
-//   // align-items:center;
-//   align-self: center;
-//   // justify-self: flex-end;
-
-
-//   // justify-items: auto;
-//   // align-self: center;
-//   // align-content: center;
-//   font-size: $fntSize;
-//   margin: 5px;
-//   width: $btnWidth;
-//   border-color: $brdrClr;
-//   border-radius: 12px;
-// }
 
 .score{
   font-size: 24pt;
@@ -222,7 +194,7 @@ button:target, button:active, button:hover, button:active:disabled{
 }
 
 
-.ans:hover{
+.ans:hover, .pressed{
   @include btn($ansBtnBrdrClr, $ansBtnBrdrClr, $prsdBtnTextClr);
 }
 
@@ -243,4 +215,8 @@ button:target, button:active, button:hover, button:active:disabled{
 .dsp-none{
   pointer-events:none;
   display: none;
+}
+
+:focus{
+  outline: none;
 }

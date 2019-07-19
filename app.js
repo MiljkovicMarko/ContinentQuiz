@@ -4,7 +4,7 @@
             //4. improve architecture/ make new architecture
             //5. responsive design
             //6. code checkup and cleaning
-            //7. disable all things in view before fade out, but without losing theire style
+            //7. disable all things in view before fade out, but without losing their style
                 //and enable them when they are fadeing in
             //8. img resize kako treba
             //9. json filtering and validation
