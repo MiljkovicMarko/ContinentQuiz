@@ -1,8 +1,8 @@
-    //zadaci: 1. keep the button style on clicked with help of <a>
+    //zadaci: 1. keep the button style on clicked
             //2. write/save the name of those who have top3 score
             //3. style all the views
             //4. improve architecture/ make new architecture
-            //5. responsive design
+            //5. responsive design css grid?
             //6. code checkup and cleaning
             //7. disable all things in view before fade out, but without losing their style
                 //and enable them when they are fadeing in
@@ -10,10 +10,11 @@
             //9. json filtering and validation
             //10. HTML i js validacija...
             //11. scss .partial
-    //priority: 1. 8. 3. 5. 4. 6. 9. 10. 11.
-    //done 2. 7.
+            //12. stilizacija slova
+    //priority: 12. 8. 3. 5. 4. 11. 9. 10. 6.
+    //done 2. 7. 1.
 
-    const siteURL='http://localhost/continentquiz/';
+    const siteURL='http://192.168.1.3/continentquiz/';
     const questionsPerQuiz=5, bestScoresQuant=3, nrChoices=3;
     const viewIds=['home','main','results'];
     const buttonIds=['playBtn','ans0Btn','ans1Btn','ans2Btn','nextBtn', 'homeBtn','playAgainBtn','saveScoreBtn'];
@@ -64,14 +65,17 @@
             let scoreboard=document.createElement('table');
             let thead=scoreboard.appendChild(document.createElement('thead'));
             let headtr=thead.appendChild(document.createElement('tr'));
+            headtr.appendChild(createElement('th','Rank'));
             headtr.appendChild(createElement('th','Username'));
             headtr.appendChild(createElement('th','Score'));
             let tbody=scoreboard.appendChild(document.createElement('tbody'));
             let tr,tdU,tdS;
-            for(i of bs){ 
+            for(let i=0;i<bs.length;i++){ 
                 tr=createElement('tr');
-                tdU=createElement('td',i.username);
-                tdS=createElement('td',i.score);
+                tdR=createElement('td','#'+(i+1));
+                tdU=createElement('td',bs[i].username);
+                tdS=createElement('td',bs[i].score);
+                tr.appendChild(tdR);
                 tr.appendChild(tdU);
                 tr.appendChild(tdS);
                 tbody.appendChild(tr);
@@ -138,12 +142,14 @@
         setFade(btns.nextBtn);
         btns.nextBtn.focus();
     }
-    onClickListeners.playBtn=function(){
+    onClickListeners.playBtn=function(evt){
         viewDivs.home.classList.remove('fade-in');
         viewDivs.results.classList.remove('fade-in');
+        // evt.currentTarget.classList.add('pressed');
         startNewQuiz();
     }
-    onClickListeners.nextBtn=function(){
+    onClickListeners.nextBtn=function(evt){
+        // evt.currentTarget.classList.add('pressed');
         let cln=viewDivs.main.cloneNode(true);
         cln.style.position='absolute';
         cln.id='cln';
@@ -153,7 +159,7 @@
         setFade(cln,false);
         viewDivs.main.classList.remove('fade-in');
         if (curQuestionNmbr>=questionsPerQuiz) {
-            document.getElementById('scoreP').innerText=pts;//prebaci u varijable
+            document.getElementById('scoreP').childNodes[0].innerText=pts;//prebaci u varijable
             prepNewQuiz();//za slucaj da se posle igra
             showResultsView(localStorage, pts);
             // switchToView(viewDivs.results);
@@ -161,20 +167,22 @@
         }
         curQuestionNmbr++;
         if (curQuestionNmbr>=questionsPerQuiz) {
-            btns.nextBtn.innerText='Go to Results';
+            btns.nextBtn.innerText='Results';
         }
         // curQuestionData=qGen.next().value;//
 
         // setDisplayNone(cln,false,false);
         viewNextQuestion(nextQuestionData,nextImg);
     }
-    onClickListeners.homeBtn=function(){
+    onClickListeners.homeBtn=function(evt){
+        // evt.currentTarget.classList.add('pressed');
         viewDivs.results.classList.remove('fade-in');
         injectScoreboardTbl(localStorage,scoreboardDiv);
         switchToView(viewDivs.home);
     }
     onClickListeners.saveScoreBtn=function(evt){
         // console.log('saveScrBtn');
+        // evt.currentTarget.classList.add('pressed');
         username= evt.currentTarget.parentNode.querySelector('#usernameTxt').value;
         saveScore(localStorage,gspd,username);
         setFade(evt.currentTarget.parentNode,false);
@@ -243,7 +251,7 @@
         img.classList.remove('load');
         curQuestionNmbr=1;
         pts=0;
-        btns.nextBtn.innerText='Next Question';
+        btns.nextBtn.innerText='Next';
         viewNextQuestion(nextQuestionData,nextImg);
     }
 

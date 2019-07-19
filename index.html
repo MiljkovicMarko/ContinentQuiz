@@ -15,34 +15,32 @@
             <button id="playBtn"><span class="material-icons category">category</span>Play</button>
         </div>
         <div id="main" class="anchor dsp-none">
-            <p>Question <span id='questionNmbr'></span>:</p>
-            <p>On which continet was this picture taken?</p>
+            <div class="question-head">
+                <p>Question <span id='questionNmbr'></span>:</p>
+                <p>On which continet was this picture taken?</p>
+            </div>
             <img id='questionImg' src="" alt="" onload="onImgLoaded();">
-            <br>
-            <button id="ans0Btn" class="btn ans text-only"><span id=ans0BtnText></span><span class="material-icons check">check</span><span class="material-icons close">close</span></button>
-            <br>
-            <button id="ans1Btn" class="btn ans text-only"><span id=ans0BtnText></span><span class="material-icons check">check</span><span class="material-icons close">close</span></button>
-            <br>
-            <button id="ans2Btn" class="btt ans text-only"><span id=ans0BtnText></span><span class="material-icons check">check</span><span class="material-icons close">close</span></button>
-            <br>
+            <button id="ans0Btn" class="btn ans text-only"><span id=ans0BtnText></span><span class="material-icons category">category</span><span class="material-icons check">check</span><span class="material-icons close">close</span></button>
+            <button id="ans1Btn" class="btn ans text-only"><span id=ans0BtnText></span><span class="material-icons category">category</span><span class="material-icons check">check</span><span class="material-icons close">close</span></button>
+            <button id="ans2Btn" class="btn ans text-only"><span id=ans0BtnText></span><span class="material-icons category">category</span><span class="material-icons check">check</span><span class="material-icons close">close</span></button>
             <div class="anchor">
-            <button id="nextBtn" class="btn dsp-none">Next Question</button>
+            <button id="nextBtn" class="btn dsp-none">Next</button>
             </div>
         </div>
         <div id="results" class="anchor dsp-none">
             <div class="anchor">
-                <i class="material-icons category">category</i>
                 <p>Your score is:</p>
-                <p id='scoreP' class="score"></p>
-                <button id="homeBtn"><i class="material-icons numbered-list">format_list_numbered</i>View the Scoreboard</button>
-                <button id="playAgainBtn"><i class="material-icons category">category</i> Play Again</button>
+                <p id='scoreP' class="score"><span></span> pts</p>
+                <button id="homeBtn" class="btn"><span class="material-icons numbered-list">format_list_numbered</span>Scoreboard</button>
+                <button id="playAgainBtn" class="btn"><span class="material-icons category">category</span> Play Again</button>
             </div>
             <div class="anchor">
                 <div id="top3score" class="dsp-none">
-                    <p>Congratiulations!!! Your score is in the top 3, pls write your name: </p>
-                    <br>
-                    <input type="text" id="usernameTxt" maxlength="25">
-                    <button id="saveScoreBtn">Save</button>
+                    <p>Congratiulations!!!</p>
+                    <p>Your score is in the top 3!</p>
+                    <label for="usernameTxt">Please write your name:</label>
+                    <input class="text-input" type="text" id="usernameTxt" maxlength="25">
+                    <button id="saveScoreBtn" class="btn">Save</button>
                 </div>
             </div>
         </div>
