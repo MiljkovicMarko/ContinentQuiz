@@ -15,7 +15,6 @@ $dfltFontSize: 1.5rem;
 $dfltBtnWidth: 22ch;
 $dfltBtnHeight: 2.5rem;
 $dfltBtnMargin: 0.5rem;
-// $dfltShadow: 0 0 10px 1px rgba(0,0,0,0.12);
 $dfltShadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 
 @mixin shadow($level: 1, $background: black) {
@@ -83,19 +82,12 @@ $dfltShadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   width: $btnWidth;
   border-color: $brdrClr;
   border-radius: 1rem;
-  // margin-left: calc(50%-15ch);
   border-style: solid;
-  // box-shadow: $boxShadow;
 
   max-width: 90vw;
   max-height: 6vh;
   font-size: 4vh;
-  // max-height: 35vh;
-  // overflow: hidden;
-  // text-indent: -50%;
-  // height: 20rem;
-  // min-height: 100%;
-  // min-width: 100%;
+
   width: 100rem;
   height: 200rem;
 
@@ -146,20 +138,6 @@ div{
   margin: 0;
   padding: 0;
 }
-// .center-cropped {
-//   // width: 100%;
-//   // height: 20rem;
-//   // background-position: center center;
-//   // background-repeat: no-repeat;
-//   width: 10em;
-//   height: 10em;
-//   // object-fit: cover;
-// }
-// img{
-//   width: 10em;
-//   height: 10em;
-//   object-fit: cover;
-// }
 
 img{
   display: flex;
@@ -168,33 +146,20 @@ img{
   opacity: 0;
   max-width: 90vw;
   max-height: 40vh;
-  // max-height: 35vh;
-  // overflow: hidden;
-  // text-indent: -50%;
-  // height: 20rem;
-  // min-height: 100%;
-  // min-width: 100%;
+
   width: 100rem;
   height: 200rem;
   object-fit: cover;
-  // background-position: center center;
-  // background-repeat: no-repeat;
+
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 0.5rem;
   position: relative;
   box-shadow: $dfltShadow;
   margin: 0.5rem 0.15rem 0.25rem 0.15rem;
-  // transition: opacity 2000ms ease-in;
 }
 
 img.load{
-  // -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
-  // -moz-animation: fadein 2s; /* Firefox < 16 */
-  //  -ms-animation: fadein 2s; /* Internet Explorer */
-  //   -o-animation: fadein 2s; /* Opera < 12.1 */
-  //      animation: fadein 2s;
-  // transition: 1s opacity ease-in-out;
   position: relative;
   opacity: 1;
 }
@@ -213,29 +178,9 @@ table {
 }
 
 table td {
-  word-wrap: break-word;         /* All browsers since IE 5.5+ */
-  overflow-wrap: break-word;     /* Renamed property in CSS3 draft spec */
+  word-wrap: break-word;         
+  overflow-wrap: break-word;
 }
-
-// @-webkit-keyframes fadeIn {
-//   from { opacity: 0; }
-//   to   { opacity: 1; }
-// }
-
-// @-moz-keyframes fadeIn {
-//   from { opacity: 0; }
-//   to   { opacity: 1; }
-// }
-
-// @-ms-keyframes fadeIn {
-//   from { opacity: 0; }
-//   to   { opacity: 1; }
-// }
-
-// @-o-keyframes fadeIn {
-//   from { opacity: 0; }
-//   to   { opacity: 1; }
-// }
 
 @keyframes fadeIn {
   from { opacity: 0; }
@@ -246,15 +191,6 @@ table td {
   from { opacity: 1; }
   to   { opacity: 0; }
 }
-
-// .check{
-//   @include icon($chckClr, $pos: absolute, $opacity: 0, $marginRight:1px,$marginLeft:auto);
-// }
-
-// .close{
-//   @include icon($closeClr, $pos: absolute, $opacity: 0, $marginRight:1px,$marginLeft:auto);
-// }
-
 .correct{
   @include ansFeedback(none, flex);
 }
@@ -270,10 +206,6 @@ table td {
 .category{
   @include icon($ctgryClr);
 }
-
-// .numbered-list{
-//   @include icon($nmbrdListClr);
-// }
 
 button{
   @include btn($dfltBtnBrdClr, $dfltBtnBckClr, $dfltBtnTxtClr);
@@ -301,14 +233,13 @@ button span{
 }
 
 button:hover{
-  // @include btn($dfltBtnBrdClr, $dfltBtnBrdClr, $prsdBtnTextClr);
   background-color: $dfltBtnBrdClr;
   color: $prsdBtnTextClr;
   @include shadow(3);
   transform: translateY(-0.15rem); 
 }
 
-button.pressed, button:active{ //css apply transform only once?
+button.pressed, button:active{
   @include btn($dfltBtnBrdClr, $dfltBtnBrdClr, $prsdBtnTextClr);
   @include shadow(2);
   transform: translateY(+0.15rem);
@@ -337,11 +268,9 @@ button.pressed, button:active{ //css apply transform only once?
   @include btn($ansBtnBrdrClr, $ansBtnBrdrClr, $prsdBtnTextClr);
   @include shadow(3);
   transform: translateY(-0.15rem); 
-  // @include shadow(1);
 }
 
 .ans.pressed, .ans:active{
-  // border-style: inset;
   @include btn($ansBtnBrdrClr, $ansBtnBrdrClr, $prsdBtnTextClr);
   @include shadow(2);
   transform: translateY(+0.15rem);
@@ -353,36 +282,24 @@ p{
   text-align: center;
   font-size: 1.5rem;
   margin: 0.5rem 0 0.5rem 0;
-  // span{
-  //   font-size: 1.5rem;
-  // }
   i.material-icons{
     font-size: 15rem;
   }
   max-width: 90vw;
-  // max-height: 3vh;
+  
   font-size: 4vh;
-  // max-height: 35vh;
-  // overflow: hidden;
-  // text-indent: -50%;
-  // height: 20rem;
-  // min-height: 100%;
-  // min-width: 100%;
-  width: 100rem;
-  // height: 200rem;
-}
 
-// .score{
-//   font-size: 4vh;
-// }
+  width: 100rem;
+  
+}
 
 .question-head{
   display: flex;
   margin: 0;
-  // flex-direction: column;
+  
   align-content: flex-start;
   justify-content: center;
-  // text-align: center;
+  
 }
 
 .text-input{
@@ -392,7 +309,6 @@ p{
   border-color: $dfltBtnBrdClr;
   border-radius: 1rem;
   padding: 2vw;
-  // margin-left: calc(50%-15ch);
   border-style: solid;
   width: 25ch;
   max-width: 99vw;
@@ -423,14 +339,10 @@ label{
 
 .disabled{
   pointer-events:none;
-  // opacity: 0.80;
   @include shadow(1);
 }
 
 .dsp-none{
   pointer-events:none !important;
-  // opacity: 0 !important;
-  // visibility: hidden !important;
-  // position: absolute !important;
   display: none !important;
 }
