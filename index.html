@@ -7,14 +7,14 @@
         <link rel="stylesheet" href="./styles/css/styles.css">
     </head>
     <body>
-        <div id="home" class="">
+        <div id="home" class="anchor">
             <p>Scoreboard</p>
-            <table>
-                <tbody id="scoreboardTbl"></tbody>
-            </table>
+            <div id="scoreboardDiv">
+
+            </div>
             <button id="playBtn"><span class="material-icons category">category</span>Play</button>
         </div>
-        <div id="main" class="dsp-none">
+        <div id="main" class="anchor dsp-none">
             <p>Question <span id='questionNmbr'></span>:</p>
             <p>What continent is on the picture?</p>
             <img id='questionImg' src="" alt="" onload="onImgLoaded();">
@@ -25,16 +25,27 @@
             <br>
             <button id="ans2Btn" class="btt ans text-only"><span id=ans0BtnText></span><span class="material-icons check">check</span><span class="material-icons close">close</span></button>
             <br>
-            <div>
-                <button id="nextBtn" class="btn dsp-none" onload="onBtnLoaded();">Next Question</button>
+            <div class="anchor">
+            <button id="nextBtn" class="btn dsp-none">Next Question</button>
             </div>
         </div>
-        <div id="results" class="dsp-none">
-            <i class="material-icons category">category</i>
-            <p>Your score is:</p>
-            <p id='scoreP' class="score"></p>
-            <button id="homeBtn"><i class="material-icons numbered-list">format_list_numbered</i>View the Scoreboard</button>
-            <button id="playAgainBtn"><i class="material-icons category">category</i> Play Again</button>
+        <div id="results" class="anchor dsp-none">
+            <div class="anchor">
+                <i class="material-icons category">category</i>
+                <p>Your score is:</p>
+                <p id='scoreP' class="score"></p>
+                <button id="homeBtn"><i class="material-icons numbered-list">format_list_numbered</i>View the Scoreboard</button>
+                <button id="playAgainBtn"><i class="material-icons category">category</i> Play Again</button>
+            </div>
+            <div class="anchor">
+                <div id="top3score" class="dsp-none">
+                    <p>Congratiulations!!!<br>Your score is in the top 3, pls write your name: </p>
+                    <br>
+                    <input type="text" id="usernameTxt" maxlength="25">
+                    <button id="saveScoreBtn">Save</button>
+                </div>
+            </div>
         </div>
+        
     </body>
 </html>

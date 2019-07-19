@@ -69,6 +69,11 @@ div {
   position: relative;
   visibility: visible; }
 
+.anchor {
+  position: relative;
+  margin: 0px;
+  padding: 0px; }
+
 .check {
   color: green;
   display: flex;
@@ -98,6 +103,7 @@ div {
   font-size: 24px; }
 
 button {
+  cursor: pointer;
   background-color: white;
   color: black;
   padding: 0px;
@@ -115,7 +121,11 @@ button {
   border-color: #2020aa;
   border-radius: 12px; }
 
-.ans, .ans:disabled, .ans:disabled:hover {
+.disabled {
+  pointer-events: none; }
+
+.ans {
+  cursor: pointer;
   background-color: white;
   color: black;
   padding: 0px;
@@ -134,6 +144,7 @@ button {
   border-radius: 12px; }
 
 button:target, button:active, button:hover, button:active:disabled {
+  cursor: pointer;
   background-color: #2020aa;
   color: white;
   padding: 0px;
@@ -151,7 +162,8 @@ button:target, button:active, button:hover, button:active:disabled {
   border-color: #2020aa;
   border-radius: 12px; }
 
-.ans:target, .ans:active, .ans:hover {
+.ans:hover {
+  cursor: pointer;
   background-color: #ffaa20;
   color: white;
   padding: 0px;
@@ -170,13 +182,18 @@ button:target, button:active, button:hover, button:active:disabled {
   border-radius: 12px; }
 
 .fade-out, button.fade-out {
-  animation: fadeOut 1s;
+  pointer-events: none;
+  animation: fadeOut 750ms;
   position: absolute; }
 
+.fade-out > * {
+  pointer-events: none; }
+
 .fade-in {
-  animation: fadeIn 1s; }
+  animation: fadeIn 1000ms; }
 
 .dsp-none {
+  pointer-events: none;
   display: none; }
 
 /*# sourceMappingURL=styles.css.map */
