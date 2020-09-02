@@ -202,11 +202,9 @@
         prepNewQuestion(qGen,img);
     }
 
-    function startNewQuiz(){
+    async function startNewQuiz(){
         while(!(Array.isArray(answers) && answers.length)){
-            sleep(200).then(() => {
-                
-            });
+            await sleep(200);
         }
         img.classList.remove('load');
         curQuestionNmbr=1;
