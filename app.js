@@ -19,7 +19,7 @@
     let gspd;
 
     window.onload= function(){
-        fetchJSONFile("https://api.myjson.com/bins/a6da9",onAnswersRecieved);
+        fetchJSONFile("/answers.json",onAnswersRecieved);
         getViewDivs();
         img=document.getElementById('questionImg');
         scoreboardDiv=document.getElementById('scoreboardDiv');
