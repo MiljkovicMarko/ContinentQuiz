@@ -194,12 +194,9 @@
 
     function prepNewQuiz() {
         if(!(Array.isArray(constanswers) && constanswers.length)) {
-            setTimeout(prepNewQuiz, 200);//wait 50 millisecnds then recheck
+            setTimeout(prepNewQuiz, 50);
             return;
         }
-//         while(!(Array.isArray(constanswers) && constanswers.length)){
-//             await sleep(200);
-//         }
         answers=constanswers.slice();
         qGen=getQuestionData(answers,distinct,nrChoices);
         img=document.getElementById('questionImg');
@@ -208,12 +205,9 @@
 
     function startNewQuiz() {
         if(!(Array.isArray(answers) && answers.length)) {
-            setTimeout(startNewQuiz, 200);//wait 50 millisecnds then recheck
+            setTimeout(startNewQuiz, 50);
             return;
         }
-//         while(!(Array.isArray(answers) && answers.length)){
-//             await sleep(200);
-//         }
         img.classList.remove('load');
         curQuestionNmbr=1;
         pts=0;
