@@ -19,7 +19,7 @@
     let gspd;
 
     window.onload= function(){
-        fetchJSONFile("/answers.json",onAnswersRecieved);
+        fetchJSONFile("./answers.json", onAnswersRecieved);
         getViewDivs();
         img=document.getElementById('questionImg');
         scoreboardDiv=document.getElementById('scoreboardDiv');
@@ -27,7 +27,7 @@
         switchToView(viewDivs[viewIds[0]]);
         addClickListeners(buttonIds,btns);
         getAnswerButtons(btns);
-        prepNewQuiz().Rsesult;
+        prepNewQuiz();
     }
 
     function getViewDivs(){
